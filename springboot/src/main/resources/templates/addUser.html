@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>增加客户</title>
+</head>
+<body>
+<form  th:action ="@{/user/addUser}" METHOD="post">
+ID:<input name="id" type="text"/>
+    姓名：<input name="name" type="text"/><span style="color: brown" th:errors="${userDao.name}"></span>
+    性别：<input name="sex" type="text"/>
+    年龄：<input name="age" type="text"/><span style="color: brown" th:errors="${userDao.age}"></span>
+    <input type="submit" value="确定"/>
+</form>
+
+</body>
+</html>

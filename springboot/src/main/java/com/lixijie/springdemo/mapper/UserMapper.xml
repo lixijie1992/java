@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lixijie.springdemo.mapper.UserMapper">
+    <insert id="insertUser" parameterType="com.lixijie.springdemo.pojo.UserDao">
+        insert  into user(id,name,age,sex) values (#{id},#{name},#{age},#{sex});
+    </insert>
+
+    <select id="selectUser" resultType="com.lixijie.springdemo.pojo.UserDao">
+        select * from user;
+    </select>
+</mapper>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>Thymeleaf</title>
+</head>
+<body>
+<!-- 
+ th:text  在页面输出某个值
+ 
+ th:value  将一个值放入到input标签中显示
+ 
+“${#strings.isEmpty(key)}" 判断内容是否为空； 为空而返回true 否则返回 false
+ 调用内置对象一定要加#   #Strings 
+ 大部分内置对象都已s结尾  Strings
+ 
+ "${#strings.contains(msg,T)}"   判断内容是否包含T
+ -->
+<span  th:text="hello"></span>
+<br></br>
+<span  th:text="${msg}"></span>
+<input  th:value="${msg}"></input>
+
+
+<span  th:text="${#strings.isEmpty(msg)}"></span>
+
+<span  th:text="${#strings.contains(msg,'9')}"></span>
+<span  th:text="${#strings.contains(msg,'f')}"></span>
+</body>
+</html>
