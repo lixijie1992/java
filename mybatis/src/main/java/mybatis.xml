@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="jdbc.properties" />
+<settings>
+<!-- 延迟加载总开关   深入延迟加载 默认 -->
+<setting name="lazyLoadingEnabled" value="true"/>
+<!-- 侵入式延迟加载开关 -->
+<!-- <setting name="aggressiveLazyLoading" value="true"/> -->
+</settings>
+	<typeAliases>
+		<package name="com.lixijie.mybatisdemo.pojo" />
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.user}" />
+				<property name="password" value="${jdbc.password}" />
+				<!-- 在任意时间存在的活动（也就是正在使用）连接的数量 -->
+				<property name="poolMaximumActiveConnections" value="30" />
+				<!-- 任意时间存在的空闲连接数 -->
+				<property name="poolMaximumIdleConnections" value="10" />
+				<!-- 在被强制返回之前，池中连接被检查的时间 -->
+				<property name="poolMaximumCheckoutTime" value="20000" />
+				<!-- 这是给连接池一个打印日志状态机会的低层次设置，还有重新尝试获得连接，这些情况下往往需要很长时间（为了避免连接池没有配置时静默失败） -->
+				<property name="poolTimeToWait" value="20000" />
+				<!-- 发送到数据的侦测查询，用来验证连接是否正常工作，并且准备接受请求。 -->
+				<property name="poolPingQuery" value="NO PING QUERY SET" />
+				<!-- 这是开启或禁用侦测查询。如果开启，你必须用一个合法的SQL语句（最好是很快速的）设置poolPingQuery属性 -->
+				<property name="poolPingEnabled" value="false" />
+				<!-- 这是用来配置poolPingQuery多次时间被用一次。这可以被设置匹配标准的数据库连接超时时间，来避免不必要的侦测 -->
+				<property name="poolPingConnectionsNotUsedFor" value="0" />
+
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+	<!-- 此种方法要求mapper接口和mapper映射文件要名称相同，且放到同一个目录下 -->
+		<package name="com.lixijie.mybatisdemo.mapper" /> 
+	</mappers>
+
+</configuration>

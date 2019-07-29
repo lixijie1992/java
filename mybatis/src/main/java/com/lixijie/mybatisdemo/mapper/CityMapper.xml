@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.lixijie.mybatisdemo.mapper.CityMapper">
+  
+  <!-- 开启内置二级缓存
+  1/对实体进行序列化
+  2/mapper文件添加 cache标签
+  
+  3/增删改同样清空二级缓存
+  4/对于二级缓存的清空实际上是将<K,V>的value值清空，而非清空整个对象
+  5/从DB中进行select查询的条件
+     1-缓存中不存在这个key
+     2-缓存中对应的这个key的value值为null
+  
+   -->
+  <cache ></cache>
+  <resultMap type="city" id="myCity">
+<id property="tid"   column="tid"/>
+<result  property="city"   column="city"/>
+<association property="province" javaType="province"  column="pid"  select="selectProvinceById"></association>
+
+</resultMap>
+
+<select id="selectProvinceById" useCache="false" resultType="province">
+select province from province where pid = #{pid};
+</select>
+<select id="selectById" resultMap="myCity">
+select city,pid,tid from city where tid = #{tid};
+</select>
+	
+	
+	
+  </mapper>

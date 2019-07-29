@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 对应的接口的全限定名 -->
+<mapper namespace="com.lixijie.mybatisdemo.mapper.StudentMapper">
+
+	<insert id="insertStudent" parameterType="student">
+		insert into student(name,age,score) values(#{name}, #{age}, #{score});
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			select
+			@@identity;
+		</selectKey>
+	</insert>
+
+	<select id="selectById" resultType="student">
+		select * from student where
+		id = #{id};
+	</select>
+
+	<delete id="deleteById" parameterType="student">
+		delete from student where
+		id = #{id};
+	</delete>
+
+	<update id="updateById">
+		update student set name= #{name}, age= #{age}, score=
+		#{score} where id =
+		#{id};
+	</update>
+
+	<select id="findAllStudent" resultType="student">
+		select * from student;
+	</select>
+
+	<select id="findStudentByName" resultType="student">
+		select * from student
+		where name like '%' #{name} '%';
+	</select>
+
+	<select id="findStudentByParams" resultType="student">
+		select * from
+		student where name like '%' #{st.name} '%' and age > #{tage}
+		and score
+		>#{tscore};
+	</select>
+
+	<select id="findStudent" resultType="student">
+		select * from student
+		<where>
+			<!-- 在where语句中必须写and -->
+			<if test="name!=null and name !=''">
+				and name like '%' #{name} '%'
+			</if>
+			<if test="age!=null and age !=''">
+				and age > #{age}
+			</if>
+			<if test="score!=null and score !=''">
+				and score >#{score}
+			</if>
+		</where>
+	</select>
+
+	<select id="findStudentChoose" resultType="student">
+		select * from student
+		<where>
+			<!-- 在where语句中必须写and -->
+			<choose>
+				<when test="name!=null and name !=''"> and name like '%' #{name} '%'</when>
+				<when test="age!=null and age !=''">and age > #{age}</when>
+				<when test="score!=null and score !=''">and score >#{score}</when>
+				<otherwise>and 1=3</otherwise>
+			</choose>
+		</where>
+	</select>
+
+
+	<select id="findStudentByIds" resultType="student">
+		select * from student
+		<if test="array.length>0">
+			<where>
+				and id in
+				<foreach collection="array" item="myid" open="(" close=")"
+					separator=",">
+					#{myid}
+				</foreach>
+			</where>
+		</if>
+	</select>
+	
+	<select id="">
+	
+	</select>
+
+</mapper>

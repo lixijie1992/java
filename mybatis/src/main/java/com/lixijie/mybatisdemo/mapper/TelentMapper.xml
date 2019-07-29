@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.lixijie.mybatisdemo.mapper.TelentMapper">
+  
+ <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+ <resultMap type="telent" id="myTelent">
+<id property="id"   column="id"/>
+<result  property="name"   column="name"/>
+<collection property="childTelent" ofType="telent"  column="id"  select="selectChildTelent"></collection>
+</resultMap>
+
+
+<select id="selectChildTelent" resultMap="myTelent">
+select id,name,cid from telent where cid = #{id};
+</select>
+	
+	<select id="selectChildTelentAndTelent" resultMap="myTelent">
+	select id,name,cid from telent where id = #{id};
+	</select>
+	
+	
+	<resultMap type="telent" id="myParentTelent">
+	<id property="id"   column="id"/>
+	<result  property="name"   column="name"/>
+	<association property="parentTelent" javaType="telent" column="cid"  select="selectParentById"></association>
+	</resultMap>
+	<select id="selectParentById" resultMap="myParentTelent">
+		select id,name,cid from telent where id = #{id};
+	</select>
+  </mapper>

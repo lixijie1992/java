@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.lixijie.mybatisdemo.mapper.CountryMapper">
+    <resultMap type="Country" id="myCountry">
+		<id property="cid" column="cid" />
+		<result property="country"  column="country"/>
+		<!--property  关联属性名   ofType  collection 的封装对象-->
+		 <collection property="Provinces"   ofType="Province">
+		 <id property="pid"  column="pid"/>
+		 <result property="province"  column="province"/>
+		 </collection>
+	</resultMap>
+
+	<select id="selectByCountry" resultMap="myCountry">
+		select C.country,P.province 
+		from province as P
+		 left join country as C 
+		 on P.c_pid = C.cid 
+		 where
+		C.cid = #{cid};
+	</select>
+	
+	
+	 <resultMap type="Country" id="myCountrys">
+		<id property="cid" column="cid" />
+		<result property="province"  column="province"/>
+		<!--property  关联属性名   ofType  collection 的封装对象-->
+		 <collection property="Provinces"   ofType="Province"   select="selectProvinceByCountryId" column="cid">
+		 </collection>
+	</resultMap>
+	
+	<select id="selectProvinceByCountryId"  resultType="province">
+	select province from province where c_pid = #{cid};
+	</select>
+	
+	<select id="selectByCountryId" resultMap="myCountrys">
+		select cid,country from country
+		 where
+		cid = #{cid};
+	</select>
+	
+	
+	
+  </mapper>
